@@ -1,0 +1,224 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# iw-odoo
+
+Es una API para capturar interactuar con Odoo. Leer los clientes, e insertar registros a facturar.
+
+## Clientes [/partner/list]
+
+### Lista los clientes [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "vat": "CL99999999X",  # rut formateado según Odoo
+                "document_number": "99.999.999-X",  # rut formateado l10n_cl
+                "name": "XXXXXXXXXXXXXXX",  # Nombre (se puede ampliar a más campos
+            }, 
+            {
+                "vat": "CL99999999X",  # rut formateado según Odoo
+                "document_number": "99.999.999-X",  # rut formateado l10n_cl
+                "name": "XXXXXXXXXXXXXXX",  # Nombre (se puede ampliar a más campos
+            }, 
+            {
+                "vat": "CL99999999X",  # rut formateado según Odoo
+                "document_number": "99.999.999-X",  # rut formateado l10n_cl
+                "name": "XXXXXXXXXXXXXXX",  # Nombre (se puede ampliar a más campos
+            },
+        ]
+
+## Leer Cliente [/partner/read]
+
+Se puede leer un cliente enviando el RUT
+
+__Valores posibles de Campos a Incorporar:__
+A pedido Se pueden incorporar todos estos campos en la respuesta, los cuales pueden ser identificados en el modelo de datos de Odoo **res.partner**:
+    
+- id
+- city_id
+- contact_address
+- parent_name
+- display_name
+- opt_out
+- title
+- commercial_company_name
+- employee
+- supplier_invoice_count
+- property_supplier_payment_term_id
+- customer
+- fax
+- image_medium
+- name
+- debit_limit
+- signup_token
+- contract_ids
+- total_invoiced
+- notify_email
+- street
+- payment_next_action_date
+- activity_description
+- store: true
+- debit
+- supplier
+- message_unread_counter
+- tp_sii_code
+- ref
+- email
+- picking_warn
+- city
+- street2
+- barcode
+- document_type_id
+- opportunity_ids
+- active
+- tz
+- signup_expiration
+- issued_total
+- zip
+- property_account_payable_id
+- credit
+- payment_next_action
+- message_bounce
+- is_company
+- message_unread
+- message_needaction_counter
+- comment
+- subscription_count
+- purchase_warn
+- color
+- image
+- invoice_ids
+- team_id
+- create_date
+- trust
+- property_payment_term_id
+- create_uid
+- user_id
+- message_is_follower
+- parent_id
+- document_number
+- message_last_post
+- email_formatted
+- im_status
+- last_website_so_id
+- last_time_entries_checked
+- type
+- start_date
+- opportunity_count
+- picking_warn_msg
+- payment_token_count
+- activities_count
+- phone
+- image_small
+- vat
+- state_id
+- website
+- company_type
+- signup_type
+- responsability_id
+- date
+- bank_account_count
+- company_name
+- write_date
+- property_stock_customer
+- lang
+- credit_limit
+- mobile
+- partner_share
+- dte_email
+
+### Leer un cliente [POST]
+
++ Request
+     + Headers
+    
+            Content-Type: application/json
+            Charset: utf-8
+            Authorization: Basic ABC123456UUUUAAAA
+
+
+    + Body
+
+            {
+                "params": {
+                    "vat": "99999999-9"
+                }
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                'jsonrpc': u'2.0',
+                'id': None, 
+                'result': {
+                    'partner_activities_ids': {
+                        'code': '999999',
+                        'name': 'Nombre de actividad'
+                    }, 
+                    'name': 'Nombre Razon Social',
+                    'dte_resolution_date': 'AAAA-MM-DD',
+                    'dte_email': 'mail@example.com',
+                    'email': 'mail@example.com',
+                    'vat': 'CL99999999X',
+                    'dte_resolution_number': '999'
+                }
+            }
+            
+## Enviar un pedido para facturar [/order/new]
+
+Permite enviar datos de una orden, para ser facturada recurrentemente.
+
+
+### Enviar un pedido [POST]
+
+
++ Request
+     + Headers
+    
+            Content-Type: application/json
+            Charset: utf-8
+            Authorization: Basic ABC123456UUUUAAAA
+
+
+    + Body
+
+            {
+                'params': {
+                    'id': 83,
+                    'vat': 'CL762012243',
+                    'productos': [
+                        {
+                            'default_code': 1, # 1 = monitoreo (servicio)
+                            'precio_un': 333.00,  # en el caso de monitoreo es precio por dia
+                            'series': [
+                                'ABC123', 'iii333', '9999ddd'
+                            ],
+                            'factor': 1, # por defecto 1
+                        },
+                        {
+                            'codigo': 34,
+                            'precio_un': 777773.0,
+                            'cantidad': 1
+                        },
+                    ]
+                }
+            }
+
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                'jsonrpc': u'2.0',
+                'id': None, 
+                'result': {
+                    'order_id': '999999',
+                    'vat': 'CL99999999X'
+                    'status': 'draft',
+                }
+            }

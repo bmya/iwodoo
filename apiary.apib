@@ -14,17 +14,14 @@ Es una API para capturar interactuar con Odoo. Leer los clientes, e insertar reg
         [
             {
                 "vat": "CL99999999X",  # rut formateado según Odoo
-                "document_number": "99.999.999-X",  # rut formateado l10n_cl
                 "name": "XXXXXXXXXXXXXXX",  # Nombre (se puede ampliar a más campos
             }, 
             {
                 "vat": "CL99999999X",  # rut formateado según Odoo
-                "document_number": "99.999.999-X",  # rut formateado l10n_cl
                 "name": "XXXXXXXXXXXXXXX",  # Nombre (se puede ampliar a más campos
             }, 
             {
                 "vat": "CL99999999X",  # rut formateado según Odoo
-                "document_number": "99.999.999-X",  # rut formateado l10n_cl
                 "name": "XXXXXXXXXXXXXXX",  # Nombre (se puede ampliar a más campos
             },
         ]
@@ -188,8 +185,8 @@ Permite enviar datos de una orden, para ser facturada recurrentemente.
 
             {
                 'params': {
-                    'id': 83,
-                    'vat': 'CL762012243',
+                    'idn': 83,
+                    'vat': '76.201.224-3', # o 76201224-3
                     'productos': [
                         {
                             'default_code': 1, # 1 = monitoreo (servicio)
@@ -200,7 +197,7 @@ Permite enviar datos de una orden, para ser facturada recurrentemente.
                             'factor': 1, # por defecto 1
                         },
                         {
-                            'codigo': 34,
+                            'default_code': 34,
                             'precio_un': 777773.0,
                             'cantidad': 1
                         },
@@ -218,7 +215,9 @@ Permite enviar datos de una orden, para ser facturada recurrentemente.
                 'id': None, 
                 'result': {
                     'order_id': '999999',
-                    'vat': 'CL99999999X'
+                    'order_name': 'SO0778',
+                    'vat': '99999999-X'
                     'status': 'draft',
+                    'origin': 83
                 }
             }
